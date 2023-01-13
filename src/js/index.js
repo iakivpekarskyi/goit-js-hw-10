@@ -14,3 +14,4 @@ function onSearch(evt) {
   const { input } = evt.currentTarget;
   console.log(input);
 }
+

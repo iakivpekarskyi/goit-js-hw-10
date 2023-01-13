@@ -7,19 +7,11 @@ export function fetchCountries(name) {
       if (!response.ok) {
          throw new Error(response.statusText)
       }
-        return response.json();
+      return response.json();
    })
+      .then(country => {
+         console.log(country)
+      
+      });
  
 } 
-
-
-//   .then(response => {
-//     return response.json();
-//   })
-//   .then(country => {
-//     console.log(country);
-//   })
-//   .catch(error => {
-//     error;
-//   });
- 
