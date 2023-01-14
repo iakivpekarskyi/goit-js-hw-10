@@ -21,6 +21,10 @@ function onSearch(evt) {
     if (country.length > 10) {
       Notify.info('Too many matches found. Please enter a more specific name.');
       clearMarkup();
+    };
+    if (country.length > 2 & country.length <= 10) {
+    // country.flag.push.countryeList;
+      clearMarkup();
     }
   });
 }

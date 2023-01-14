@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homework 10</title>
   </head>
+
   <body>
-    <form type="submit" class="js-form" >
-    <input type="text" id="search-box" name="input"/>
-    <ul class="country-list"></ul>
-    <div class="country-info"></div>
-</form>
+    <form type="submit" class="js-form">
+      <input type="text" id="search-box" name="input" />
+      <ul class="country-list"></ul>
+      <div class="country-info"></div>
+    </form>
     <script src="./js/index.js" type="module"></script>
+    <script id="card-template" type="text/x-handlebars-template">
+        <div class="card">
+<img src="{{flags}}" alt="{{name}}">
+</div>
+<div class="info-card">
+  <h1 class="name">Name:{{official.name}}</h1>
+  <p class="capital">Capital:{{capital}}</p>
+  <p class="population">Population:{{population}}</p>
+  <p class="languages">Languages:{{languages}}</p>
+  <p>Map</p>
+</div>
+    </script>
   </body>
+
 </html>
