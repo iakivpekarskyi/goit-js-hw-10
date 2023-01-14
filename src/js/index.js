@@ -1,17 +1,32 @@
-
 import '../css/styles.css';
-import { countries } from './fetchCountries';
+import { countries, fetchCountries } from './fetchCountries';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const DEBOUNCE_DELAY = 300;
-const form = document.querySelector('.js-form');
+const searchBox = document.querySelector('#search-box');
+const countryList = document.querySelector('.country-list');
+const countryInfo = document.querySelector('country-info');
 
-form.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
+searchBox.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 
 function onSearch(evt) {
   evt.preventDefault();
-  const { input } = evt.currentTarget;
-  console.log(input);
+  const countryName = searchBox.value.trim();
+  if (countryName === '') {
+    clearMarkup();
+  }
+
+  fetchCountries(countryName).then(country => {
+    if (country.length > 10) {
+      Notify.info('Too many matches found. Please enter a more specific name.');
+      clearMarkup();
+    }
+  });
 }
 
+function clearMarkup() {
+  countryInfo.innerHTML = '';
+  countryList.innerHTML = '';
+  return;
+}
