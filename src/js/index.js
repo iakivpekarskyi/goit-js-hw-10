@@ -1,5 +1,5 @@
 import '../css/styles.css';
-import { countries, fetchCountries } from './fetchCountries';
+import { fetchCountries } from './fetchCountries';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
@@ -10,27 +10,60 @@ const countryInfo = document.querySelector('country-info');
 
 searchBox.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 
-function onSearch(evt) {
-  evt.preventDefault();
+function onSearch(event) {
+  event.preventDefault();
   const countryName = searchBox.value.trim();
   if (countryName === '') {
     clearMarkup();
   }
 
-  fetchCountries(countryName).then(country => {
-    if (country.length > 10) {
+  fetchCountries(countryName).then(countries => {
+    if (countries.length > 10) {
       Notify.info('Too many matches found. Please enter a more specific name.');
-      clearMarkup();
-    };
-    if (country.length > 2 & country.length <= 10) {
-    // country.flag.push.countryeList;
-      clearMarkup();
+    } else if (countries.length > 1) {
+      countryCardMarkup();
+    } else {
+      countryListMarkup();
     }
   });
 }
 
+
+
 function clearMarkup() {
   countryInfo.innerHTML = '';
   countryList.innerHTML = '';
-  return;
+}
+
+
+
+function countryCardMarkup(countries) {
+  const countryMarkup = countries.map(
+    country => `
+          <div class="card">
+  <img src="${country.flags.svg}" alt="${country.name.official}">
+  </div>
+  <div class="info-card">
+    <h1 class="name">Name:${country.name.official}</h1>
+    <p class="capital">Capital:${country.capital}</p>
+    <p class="population">Population:${country.population}</p>
+    <p class="languages">Languages:${country.languages}</p>
+    <p>Map??????????</p>
+  </div>
+  `
+  );
+  countryCard.innerHTML = countryMarkup;
+}
+
+
+
+function countryListMarkup(countries) {
+  const listMarkup = countries.map(
+    country => `
+ <li class="country-list__item">
+    <img class="country-list__flags" src="${country.flags.svg}" alt="${country.name.official}" width="25" />
+    <h2 class="country-list__name">${country.name.official}</h2>
+  </li> `
+  );
+  countryList.innerHTML = listMarkup;
 }
