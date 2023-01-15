@@ -18,3 +18,14 @@ body {
   max-width: 420px;
   margin-bottom: 16px;
 }
+
+
+.country-name {
+  font-size: 40px;
+}
+
+.country-card {
+  margin: auto;
+   display: flex;
+   align-items: center;
+}

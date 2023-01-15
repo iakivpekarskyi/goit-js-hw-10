@@ -1,7 +1,6 @@
 
 const BASE_URL = 'https://restcountries.com/v3.1/name/';
-const filters = '?fields=name.official,capital,population,flags.svg,languages';
-
+const filters = '?fields=name,capital,population,flags,languages';
 
 export function fetchCountries(countryName) {
   return fetch(`${BASE_URL}${countryName}${filters}`).then(response => {
@@ -10,6 +9,5 @@ export function fetchCountries(countryName) {
     }
     return response.json();
   })
-  .catch(err => console.error(err))
 };
 
