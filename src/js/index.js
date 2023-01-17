@@ -10,29 +10,32 @@ const countryCard = document.querySelector('.country-info');
 
 searchBox.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 
-function onSearch(event) {
+function onSearch() {
   countryList.innerHTML = ' ';
   const countryName = searchBox.value.trim();
   if (!countryName) {
-    countryList.innerHTML = ' ';
+    countryCard.innerHTML = ' ';
     return;
+    
   }
-
-
 
 
   fetchCountries(countryName)
     .then(countries => {
-    if (countries.length > 10) {
-      Notify.info('Too many matches found. Please enter a more specific name.');
-    } else if (countries.length > 1) {
-      countryListMarkup(countries);
-    } else {
-      countryCardMarkup(countries);
-    }
-  });
+      if (countries.length > 10) {
+        Notify.info(
+          'Too many matches found. Please enter a more specific name.'
+        );
+      } else if (countries.length > 1) {
+        countryListMarkup(countries);
+      } else {
+        countryCardMarkup(countries);
+      }
+    })
+    .catch(error => {
+      Notify.warning('Oops, there is no country with that name');
+    });
 }
-
 
 
 
@@ -41,7 +44,7 @@ function countryListMarkup(countries) {
   const listMarkup = countries
     .map(
       country =>
-        `<li><img src="${country.flags.svg}" alt="${country.name.official}" width="25" />
+        `<li><img src="${country.flags.svg}" alt="${country.name.official}" width="150" />
     <h2 class="country-list__name">${country.name.official}</h2>
   </li> `
     )
@@ -56,17 +59,18 @@ function countryCardMarkup(countries) {
     .map(
       country => `
           <div class="country-card">
-  <img src="${country.flags.svg}" alt="${country.name.official}">
+  <img src="${country.flags.svg}" alt="${country.name.official}" width="300">
   </div>
   <div class="info-card">
     <h1 class="country-name">${country.name.official}</h1>
-    <p class="capital">Capital:${country.capital}</p>
-    <p class="population">Population:${country.population}</p>
-    <p class="languages">Languages:${Object.values(country.languages)}</p>
+    <p class="capital">Capital: ${country.capital}</p>
+    <p class="population">Population: ${country.population}</p>
+    <p class="languages">Languages: ${Object.values(country.languages)}</p>
   </div>
   `
     )
     .join('');
   countryCard.innerHTML = countryMarkup;
+
 }
 
