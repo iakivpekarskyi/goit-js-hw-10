@@ -16,9 +16,7 @@ function onSearch() {
   if (!countryName) {
     countryCard.innerHTML = ' ';
     return;
-    
   }
-
 
   fetchCountries(countryName)
     .then(countries => {
@@ -37,9 +35,6 @@ function onSearch() {
     });
 }
 
-
-
-
 function countryListMarkup(countries) {
   const listMarkup = countries
     .map(
@@ -51,8 +46,6 @@ function countryListMarkup(countries) {
     .join('');
   countryList.innerHTML = listMarkup;
 }
-
-
 
 function countryCardMarkup(countries) {
   const countryMarkup = countries
@@ -71,6 +64,4 @@ function countryCardMarkup(countries) {
     )
     .join('');
   countryCard.innerHTML = countryMarkup;
-
 }
-
