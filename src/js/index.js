@@ -11,10 +11,10 @@ const countryCard = document.querySelector('.country-info');
 searchBox.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 
 function onSearch() {
-  countryList.innerHTML = ' ';
   const countryName = searchBox.value.trim();
   if (!countryName) {
-    countryCard.innerHTML = ' ';
+   countryCard.innerHTML = '';
+   countryList.innerHTML = '';
     return;
   }
 
@@ -24,10 +24,18 @@ function onSearch() {
         Notify.info(
           'Too many matches found. Please enter a more specific name.'
         );
-      } else if (countries.length > 1) {
+        countryCard.innerHTML = '';
+        countryList.innerHTML = '';
+        return;
+      }
+      else if (countries.length > 1) {
         countryListMarkup(countries);
+        countryCard.innerHTML = '';
+
       } else {
         countryCardMarkup(countries);
+        countryList.innerHTML = '';
+        countryList.innerHTML = '';
       }
     })
     .catch(error => {
